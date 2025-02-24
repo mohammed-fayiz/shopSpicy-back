@@ -1,0 +1,25 @@
+const express=require('express')
+const { regUser, logUser, getVideo, getProdSellFarm, farmerSellOrder, farmerAddToCart, farmerViewCart, removeCart, getOrderDetails, farmerBuyOrder, getOrderDetailsWhole, wholePlaceOrder, wholeAddProduct, getWholeProduct, wholeDeleteProduct, wholeProdUpdate, getRetailerOrder, wholeUsersList } = require('../cotnroller/userCtrl')
+
+const userRouter=express.Router()
+
+userRouter.route('/register').post(regUser)
+userRouter.route('/login').post(logUser)
+userRouter.route('/getvideo').get(getVideo)
+userRouter.route('/getprodsell').get(getProdSellFarm)
+userRouter.route('/farmersellorder').post(farmerSellOrder)
+userRouter.route('/farmeraddtocart').post(farmerAddToCart)
+userRouter.route('/farmerviewcart').get(farmerViewCart)
+userRouter.route('/removecart').delete(removeCart)
+userRouter.route('/getorderdetails').get(getOrderDetails)
+userRouter.route('/getorderdetailswhole').get(getOrderDetailsWhole)
+userRouter.route('/farmerbuyorder').post(farmerBuyOrder)
+userRouter.route('/wholeplaceorder').post(wholePlaceOrder)
+userRouter.route('/wholeaddproduct').post(wholeAddProduct)
+userRouter.route('/getwholeproduct').get(getWholeProduct)
+userRouter.route('/wholedeleteproduct/:id').delete(wholeDeleteProduct)
+userRouter.route('/wholeprodupdate').put(wholeProdUpdate)
+userRouter.route('/getretailerorder').get(getRetailerOrder)
+userRouter.route('/wholeuserslist').get(wholeUsersList)
+
+module.exports=userRouter

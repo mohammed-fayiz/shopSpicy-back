@@ -1,5 +1,5 @@
 const userModel=require('../model/userModel')
-const bcrypt=require('bcrypt')
+const argon2=require('argon2')
 const jwt=require('jsonwebtoken')
 const serviceModel = require('../model/serviceModel')
 const productModel = require('../model/productModel')
@@ -14,8 +14,8 @@ const regUser=async(req,res)=>{
             res.json("user exist")
         }
         else{
-            const salt=10
-            const hashPassword=await bcrypt.hash(password,salt)
+            // const salt=10
+            const hashPassword=await argon2.hash(password)
             const user=new userModel({
                 username,
                 email,
@@ -39,7 +39,7 @@ const logUser=async(req,res)=>{
             res.json({msg:"user not found",status:300})
         }
         else{
-            const x=await bcrypt.compare(password,user.password)
+            const x=await argon2.verify(user.password,password)
             
             if(x){
                 const token=jwt.sign({data:user},'shopspicy',{expiresIn:'1h'})

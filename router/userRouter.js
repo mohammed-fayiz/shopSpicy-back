@@ -1,5 +1,5 @@
 const express=require('express')
-const { regUser, logUser, getVideo, getProdSellFarm, farmerSellOrder, farmerAddToCart, farmerViewCart, removeCart, getOrderDetails, farmerBuyOrder, getOrderDetailsWhole, wholePlaceOrder, wholeAddProduct, getWholeProduct, wholeDeleteProduct, wholeProdUpdate, getRetailerOrder, wholeUsersList } = require('../cotnroller/userCtrl')
+const { regUser, logUser, getVideo, getProdSellFarm, farmerSellOrder, farmerAddToCart, farmerViewCart, removeCart, getOrderDetails, farmerBuyOrder, getOrderDetailsWhole, wholePlaceOrder, wholeAddProduct, getWholeProduct, wholeDeleteProduct, wholeProdUpdate, getRetailerOrder, wholeUsersList, deleteAccount } = require('../cotnroller/userCtrl')
 
 const userRouter=express.Router()
 
@@ -21,5 +21,6 @@ userRouter.route('/wholedeleteproduct/:id').delete(wholeDeleteProduct)
 userRouter.route('/wholeprodupdate').put(wholeProdUpdate)
 userRouter.route('/getretailerorder').get(getRetailerOrder)
 userRouter.route('/wholeuserslist').get(wholeUsersList)
+userRouter.route('/deleteaccount').post(deleteAccount)
 
 module.exports=userRouter

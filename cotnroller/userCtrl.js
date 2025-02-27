@@ -21,7 +21,8 @@ const regUser=async(req,res)=>{
                 email,
                 mobile,
                 userType,
-                password:hashPassword
+                password:hashPassword,
+                isActive:'active'
             })
             await user.save()
             res.json("User Registered")
@@ -41,7 +42,7 @@ const logUser=async(req,res)=>{
         else{
             const x=await argon2.verify(user.password,password)
             
-            if(x){
+            if(x && user.isActive=='active'){
                 const token=jwt.sign({data:user},'shopspicy',{expiresIn:'1h'})
                 res.json({msg:"login Successfull",token:token,status:200})
                 
@@ -196,6 +197,7 @@ const farmerBuyOrder=async(req,res)=>{
         const {userId,cartId,location}=req.body.data
         const {landmark,pincode,city,state}=location
         let order=await orderModel.findOne({cartId:cartId})
+        
         console.log(userId,cartId,landmark,pincode,city,state)
         if(order){
             res.json({msg:"order exist"})
@@ -327,9 +329,21 @@ const wholeUsersList=async(req,res)=>{
     }
 }
 
+const deleteAccount=async(req,res)=>{
+    try {
+        const {userId}=req.body.data
+        console.log(userId)
+        let user=await userModel.findOne({_id:userId})
+        user.isActive="inactive"
+        await user.save()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports={regUser,logUser,getVideo,getProdSellFarm,farmerSellOrder,
     farmerAddToCart,farmerViewCart,removeCart,getOrderDetails,farmerBuyOrder,
     getOrderDetailsWhole,wholePlaceOrder,wholeAddProduct,getWholeProduct,
-    wholeDeleteProduct,wholeProdUpdate,getRetailerOrder,wholeUsersList
+    wholeDeleteProduct,wholeProdUpdate,getRetailerOrder,wholeUsersList,deleteAccount
     
 }
